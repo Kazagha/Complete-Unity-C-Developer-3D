@@ -11,5 +11,7 @@ public class ObjectHit : MonoBehaviour
         // Change the colour on collision 
         MeshRenderer mesh = GetComponent<MeshRenderer>();
         mesh.material.color = Color.yellow;
+
+
     }
 }
