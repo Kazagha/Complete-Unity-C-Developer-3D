@@ -4,11 +4,10 @@ using UnityEngine;
 
 public class Mover : MonoBehaviour
 {
-    //[SerializeField] float xValue = 0.0f;
-    [SerializeField] float yValue = 1.0f;
-    //[SerializeField] float zValue = 0.0f;
+    [SerializeField] float yValue = 1.0f;    
+    [SerializeField] float moveSpeed = 7f;
+
     // Start is called before the first frame update
-    [SerializeField] float moveSpeed = 5f;
     void Start()
     {
         
@@ -17,8 +16,9 @@ public class Mover : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float xValue = Input.GetAxis("Horizontal");
-        float zValue = Input.GetAxis("Vertical");
-        transform.Translate(xValue * moveSpeed * Time.deltaTime, yValue * Time.deltaTime, zValue * moveSpeed * Time.deltaTime);
+        // Move the Player character around 
+        float xValue = Input.GetAxis("Horizontal") * moveSpeed * Time.deltaTime;
+        float zValue = Input.GetAxis("Vertical") * moveSpeed * Time.deltaTime;
+        transform.Translate(xValue , yValue * Time.deltaTime, zValue);
     }
 }
