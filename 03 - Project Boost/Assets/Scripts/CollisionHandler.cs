@@ -5,21 +5,24 @@ using UnityEngine.SceneManagement;
 
 public class CollisionHandler : MonoBehaviour
 {
+    [SerializeField] float levelLoadDelay = 1f;
     private void OnCollisionEnter(Collision collision)
     {        
         switch (collision.gameObject.tag)
         {            
             case "Obstacle":
                 Debug.Log("Collision Detected");
-                onDeath();
+                startCrashSequence();
+                //Invoke("startCrashSequence", 1);
                 break;
             case "Ground":
                 Debug.Log("Ground");
-                onDeath();
+                //Invoke("startCrashSequence", 1);
+                startCrashSequence();
                 break;
             case "Landing Pad":
                 Debug.Log("Landing success");
-                loadNextLevel();
+                Invoke("loadNextLevel", levelLoadDelay);
                 break;
             case "Launch Pad":
                 break;
@@ -29,15 +32,34 @@ public class CollisionHandler : MonoBehaviour
         }
     }
 
-    void onDeath()
+    void startCrashSequence()
+    {
+        Debug.Log(this.GetType().ToString());
+        GetComponent<Movement>().enabled = false;        
+        Invoke("reloadLevel", levelLoadDelay);
+    }
+    
+    void reloadLevel()
     {
         int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
         SceneManager.LoadScene(currentSceneIndex);
     }
 
-    void loadNextLevel()
+    void startSuccessSequence()
     {
-        int currentSceneIndex = SceneManager.GetActiveScene().buildIndex + 1;
-        SceneManager.LoadScene(currentSceneIndex);
+        GetComponent<Movement>().enabled = false;
+        Invoke("LoadNextLevel", levelLoadDelay);
+    }
+
+    private static void LoadNextLevel()
+    {
+        int nextSceneIndex = SceneManager.GetActiveScene().buildIndex + 1;
+        if (nextSceneIndex == SceneManager.sceneCountInBuildSettings)
+        {
+            Debug.Log("You win the game!");
+            // Restart the game 
+            nextSceneIndex = 0;
+        }
+        SceneManager.LoadScene(nextSceneIndex);
     }
 }
