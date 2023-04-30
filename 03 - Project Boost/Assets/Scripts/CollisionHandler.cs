@@ -19,6 +19,7 @@ public class CollisionHandler : MonoBehaviour
                 break;
             case "Landing Pad":
                 Debug.Log("Landing success");
+                loadNextLevel();
                 break;
             case "Launch Pad":
                 break;
@@ -31,6 +32,12 @@ public class CollisionHandler : MonoBehaviour
     void onDeath()
     {
         int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+        SceneManager.LoadScene(currentSceneIndex);
+    }
+
+    void loadNextLevel()
+    {
+        int currentSceneIndex = SceneManager.GetActiveScene().buildIndex + 1;
         SceneManager.LoadScene(currentSceneIndex);
     }
 }
