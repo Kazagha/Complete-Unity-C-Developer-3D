@@ -5,7 +5,7 @@ using UnityEngine;
 public class Movement : MonoBehaviour
 {
     Rigidbody body;
-    AudioSource audio;
+    AudioSource audioSource;
 
     [SerializeField] float thrustForce = 10f;
     [SerializeField] float torqueForce = 10f;
@@ -13,7 +13,7 @@ public class Movement : MonoBehaviour
     void Start()
     {
         body = GetComponent<Rigidbody>();
-        audio = GetComponent<AudioSource>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -32,15 +32,15 @@ public class Movement : MonoBehaviour
         }
         else
         {
-            audio.Stop();
+            audioSource.Stop();
         }
     }
 
     void PlayAudio()
     {
-        if(!audio.isPlaying)
+        if(!audioSource.isPlaying)
         {
-            audio.Play();
+            audioSource.Play();
         }
     }
 
