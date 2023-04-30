@@ -33,15 +33,23 @@ public class Movement : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.LeftArrow))
         {
-            body.AddRelativeTorque(0, 0, torqueForce * Time.deltaTime);
+            ApplyTorque(torqueForce);
         }
         else if (Input.GetKey(KeyCode.RightArrow))
         {
-            body.AddRelativeTorque(0, 0, -torqueForce * Time.deltaTime);
+            ApplyTorque(-torqueForce);
         }
         else
         {            
             body.AddRelativeTorque(0, 0, 0);
         }
+    }
+
+    private void ApplyTorque(float torque)
+    {
+        body.freezeRotation = true;
+        transform.Rotate(Vector3.forward * torque * Time.deltaTime);
+        //body.AddRelativeTorque(Vector3.forward * torque * Time.deltaTime);
+        body.freezeRotation = false;
     }
 }
