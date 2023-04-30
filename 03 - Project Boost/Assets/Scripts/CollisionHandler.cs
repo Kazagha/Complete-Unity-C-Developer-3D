@@ -1,21 +1,24 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CollisionHandler : MonoBehaviour
 {
     private void OnCollisionEnter(Collision collision)
-    {
-        switch(collision.gameObject.tag)
+    {        
+        switch (collision.gameObject.tag)
         {            
             case "Obstacle":
                 Debug.Log("Collision Detected");
-                break;
-            case "Landing Pad":
-                Debug.Log("Landing success");
+                onDeath();
                 break;
             case "Ground":
                 Debug.Log("Ground");
+                onDeath();
+                break;
+            case "Landing Pad":
+                Debug.Log("Landing success");
                 break;
             case "Launch Pad":
                 break;
@@ -23,5 +26,11 @@ public class CollisionHandler : MonoBehaviour
                 Debug.Log("Other Collision");
                 break;
         }
+    }
+
+    void onDeath()
+    {
+        int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+        SceneManager.LoadScene(currentSceneIndex);
     }
 }
