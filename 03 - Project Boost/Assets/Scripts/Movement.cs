@@ -7,6 +7,9 @@ public class Movement : MonoBehaviour
     [SerializeField] float thrustForce = 10f;
     [SerializeField] float torqueForce = 10f;
     [SerializeField] AudioClip thrustClip;
+    [SerializeField] ParticleSystem thrustParticlesLeft;
+    [SerializeField] ParticleSystem thrustParticlesRight;
+    [SerializeField] ParticleSystem thrustParticlesMain;
 
     Rigidbody body;
     AudioSource audioSource;      
@@ -32,10 +35,15 @@ public class Movement : MonoBehaviour
         {
             body.AddRelativeForce(Vector3.up * thrustForce * Time.deltaTime);
             PlayAudio();
+            if(!thrustParticlesMain.isPlaying)
+            {
+                thrustParticlesMain.Play();
+            }            
         }
         else
         {
             audioSource.Stop();
+            thrustParticlesMain.Stop();
         }
     }
 
@@ -52,14 +60,24 @@ public class Movement : MonoBehaviour
         if (Input.GetKey(KeyCode.LeftArrow))
         {
             ApplyTorque(torqueForce);
+            if(!thrustParticlesRight.isPlaying)
+            {
+                thrustParticlesRight.Play();
+            }            
         }
         else if (Input.GetKey(KeyCode.RightArrow))
         {
             ApplyTorque(-torqueForce);
+            if(!thrustParticlesLeft.isPlaying)
+            {
+                thrustParticlesLeft.Play();
+            }            
         }
         else
         {            
             body.AddRelativeTorque(0, 0, 0);
+            thrustParticlesRight.Stop();
+            thrustParticlesLeft.Stop();
         }
     }
 
