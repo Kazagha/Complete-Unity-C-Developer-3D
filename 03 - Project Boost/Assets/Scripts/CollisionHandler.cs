@@ -5,7 +5,20 @@ using UnityEngine.SceneManagement;
 
 public class CollisionHandler : MonoBehaviour
 {
+    // Params
     [SerializeField] float levelLoadDelay = 1f;
+    [SerializeField] AudioClip successClip;
+    [SerializeField] AudioClip deathClip;
+
+    // Cache 
+    AudioSource audioSource;
+
+    //State
+
+    private void Start()
+    {
+        audioSource = GetComponent<AudioSource>();
+    }
     private void OnCollisionEnter(Collision collision)
     {        
         switch (collision.gameObject.tag)
@@ -22,7 +35,7 @@ public class CollisionHandler : MonoBehaviour
                 break;
             case "Landing Pad":
                 Debug.Log("Landing success");
-                Invoke("loadNextLevel", levelLoadDelay);
+                startSuccessSequence();
                 break;
             case "Launch Pad":
                 break;
@@ -33,9 +46,9 @@ public class CollisionHandler : MonoBehaviour
     }
 
     void startCrashSequence()
-    {
-        Debug.Log(this.GetType().ToString());
-        GetComponent<Movement>().enabled = false;        
+    {        
+        GetComponent<Movement>().enabled = false;
+        PlayDeathAudio();
         Invoke("reloadLevel", levelLoadDelay);
     }
     
@@ -45,14 +58,17 @@ public class CollisionHandler : MonoBehaviour
         SceneManager.LoadScene(currentSceneIndex);
     }
 
-    void startSuccessSequence()
+    public void startSuccessSequence()
     {
         GetComponent<Movement>().enabled = false;
+        PlaySuccessAudio();
         Invoke("LoadNextLevel", levelLoadDelay);
     }
 
-    private static void LoadNextLevel()
+    public void LoadNextLevel()
     {
+        Debug.Log("Load Next Level");        
+
         int nextSceneIndex = SceneManager.GetActiveScene().buildIndex + 1;
         if (nextSceneIndex == SceneManager.sceneCountInBuildSettings)
         {
@@ -61,5 +77,23 @@ public class CollisionHandler : MonoBehaviour
             nextSceneIndex = 0;
         }
         SceneManager.LoadScene(nextSceneIndex);
+    }
+
+    void PlaySuccessAudio()
+    {
+        audioSource.Stop();
+        if (!audioSource.isPlaying)
+        {
+            audioSource.PlayOneShot(successClip);
+        }
+    }
+
+    void PlayDeathAudio()
+    {
+        audioSource.Stop();
+        if (!audioSource.isPlaying)
+        {
+            audioSource.PlayOneShot(deathClip);
+        }
     }
 }

@@ -114,6 +114,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thrustForce: 750
   torqueForce: 50
+  thrustClip: {fileID: 8300000, guid: f0017e8695218564090b5f04070601fc, type: 3}
 --- !u!54 &652476586
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -238,6 +239,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2506804e40d6f2d43a46ed38cc07440a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  levelLoadDelay: 1
+  successClip: {fileID: 0}
+  deathClip: {fileID: 0}
 --- !u!114 &5258572769444626900
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -250,3 +254,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2506804e40d6f2d43a46ed38cc07440a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  levelLoadDelay: 1
+  successClip: {fileID: 8300000, guid: 5de2dfd6bc5c5374fa5a78c5d54f9990, type: 3}
+  deathClip: {fileID: 8300000, guid: bc231b08660a8b641998b86d226d8f5c, type: 3}

@@ -9,6 +9,7 @@ public class Movement : MonoBehaviour
 
     [SerializeField] float thrustForce = 10f;
     [SerializeField] float torqueForce = 10f;
+    [SerializeField] AudioClip thrustClip;
     // Start is called before the first frame update
     void Start()
     {
@@ -20,7 +21,8 @@ public class Movement : MonoBehaviour
     void Update()
     {
         ProcessThrust();
-        ProcessRotation();         
+        ProcessRotation();
+        loadNextLevel();
     }
 
     void ProcessThrust ()
@@ -40,7 +42,7 @@ public class Movement : MonoBehaviour
     {
         if(!audioSource.isPlaying)
         {
-            audioSource.Play();
+            audioSource.PlayOneShot(thrustClip);
         }
     }
 
@@ -66,5 +68,14 @@ public class Movement : MonoBehaviour
         transform.Rotate(Vector3.forward * torque * Time.deltaTime);
         //body.AddRelativeTorque(Vector3.forward * torque * Time.deltaTime);
         body.freezeRotation = false;
+    }
+
+    void loadNextLevel()
+    {
+        if (Input.GetKey(KeyCode.N))
+        {   
+            CollisionHandler coll = GetComponent<CollisionHandler>();
+            coll.startSuccessSequence();
+        }
     }
 }
