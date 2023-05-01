@@ -33,17 +33,27 @@ public class Movement : MonoBehaviour
     {
         if(Input.GetKey(KeyCode.Space))
         {
-            body.AddRelativeForce(Vector3.up * thrustForce * Time.deltaTime);
-            PlayAudio();
-            if(!thrustParticlesMain.isPlaying)
-            {
-                thrustParticlesMain.Play();
-            }            
+            StartThrust();
         }
         else
         {
-            audioSource.Stop();
-            thrustParticlesMain.Stop();
+            StopThrust();
+        }
+    }
+
+    private void StopThrust()
+    {
+        audioSource.Stop();
+        thrustParticlesMain.Stop();
+    }
+
+    private void StartThrust()
+    {
+        body.AddRelativeForce(Vector3.up * thrustForce * Time.deltaTime);
+        PlayAudio();
+        if (!thrustParticlesMain.isPlaying)
+        {
+            thrustParticlesMain.Play();
         }
     }
 
@@ -60,25 +70,23 @@ public class Movement : MonoBehaviour
         if (Input.GetKey(KeyCode.LeftArrow))
         {
             ApplyTorque(torqueForce);
-            if(!thrustParticlesRight.isPlaying)
-            {
-                thrustParticlesRight.Play();
-            }            
+          
         }
         else if (Input.GetKey(KeyCode.RightArrow))
         {
-            ApplyTorque(-torqueForce);
-            if(!thrustParticlesLeft.isPlaying)
-            {
-                thrustParticlesLeft.Play();
-            }            
+            ApplyTorque(-torqueForce);           
         }
         else
-        {            
-            body.AddRelativeTorque(0, 0, 0);
-            thrustParticlesRight.Stop();
-            thrustParticlesLeft.Stop();
+        {
+            StopRotation();
         }
+    }
+
+    private void StopRotation()
+    {
+        body.AddRelativeTorque(0, 0, 0);
+        thrustParticlesRight.Stop();
+        thrustParticlesLeft.Stop();
     }
 
     private void ApplyTorque(float torque)
@@ -87,6 +95,21 @@ public class Movement : MonoBehaviour
         transform.Rotate(Vector3.forward * torque * Time.deltaTime);
         //body.AddRelativeTorque(Vector3.forward * torque * Time.deltaTime);
         body.freezeRotation = false;
+
+        if(torque > 0)
+        {
+            if(!thrustParticlesRight.isPlaying)
+            {
+                thrustParticlesRight.Play();
+            }  
+        }
+        else
+        {
+            if(!thrustParticlesLeft.isPlaying)
+            {
+                thrustParticlesLeft.Play();
+            } 
+        }
     }
 
     void loadNextLevel()
