@@ -26,7 +26,7 @@ public class Movement : MonoBehaviour
     {
         ProcessThrust();
         ProcessRotation();
-        loadNextLevel();
+        EnableDebug();
     }
 
     void ProcessThrust ()
@@ -112,12 +112,17 @@ public class Movement : MonoBehaviour
         }
     }
 
-    void loadNextLevel()
+    void EnableDebug()
     {
         if (Input.GetKey(KeyCode.N))
         {   
             CollisionHandler coll = GetComponent<CollisionHandler>();
             coll.startSuccessSequence();
+        }
+
+        if (Input.GetKey(KeyCode.C))
+        {
+            // Disable collisions
         }
     }
 }

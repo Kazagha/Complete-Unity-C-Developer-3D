@@ -11,4 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Stay Low.unity
     guid: 3efc61246cddba34383df7c34e019ea1
+  - enabled: 1
+    path: Assets/Scenes/Advanced Flying.unity
+    guid: 916bddb97e480764491af6802515f67a
   m_configObjects: {}
