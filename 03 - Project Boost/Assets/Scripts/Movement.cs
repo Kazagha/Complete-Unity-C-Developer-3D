@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class Movement : MonoBehaviour
 {
-    Rigidbody body;
-    AudioSource audioSource;
-
     [SerializeField] float thrustForce = 10f;
     [SerializeField] float torqueForce = 10f;
     [SerializeField] AudioClip thrustClip;
+
+    Rigidbody body;
+    AudioSource audioSource;      
+        
     // Start is called before the first frame update
     void Start()
     {

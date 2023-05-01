@@ -14,13 +14,16 @@ public class CollisionHandler : MonoBehaviour
     AudioSource audioSource;
 
     //State
+    bool isTransitioning = false;   
 
     private void Start()
     {
         audioSource = GetComponent<AudioSource>();
     }
     private void OnCollisionEnter(Collision collision)
-    {        
+    {     
+        if(isTransitioning) { return; }
+        
         switch (collision.gameObject.tag)
         {            
             case "Obstacle":
@@ -42,13 +45,14 @@ public class CollisionHandler : MonoBehaviour
             default:
                 Debug.Log("Other Collision");
                 break;
-        }
+        }        
     }
 
     void startCrashSequence()
     {        
         GetComponent<Movement>().enabled = false;
         PlayDeathAudio();
+        isTransitioning = true;
         Invoke("reloadLevel", levelLoadDelay);
     }
     
@@ -62,10 +66,11 @@ public class CollisionHandler : MonoBehaviour
     {
         GetComponent<Movement>().enabled = false;
         PlaySuccessAudio();
+        isTransitioning = true;
         Invoke("LoadNextLevel", levelLoadDelay);
     }
 
-    public void LoadNextLevel()
+    void LoadNextLevel()
     {
         Debug.Log("Load Next Level");        
 
