@@ -9,6 +9,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float xSpeed  = 50f;
     [SerializeField] float ySpeed = 50f;
 
+    float xRange = 10f;
+    float yRange = 5.5f; 
     Vector3 newPos;
 
     // Start is called before the first frame update
@@ -32,10 +34,10 @@ public class PlayerController : MonoBehaviour
     {
         float xThrow = movement.ReadValue<Vector2>().x;
         float yThrow = movement.ReadValue<Vector2>().y;
-
+        
         newPos = new Vector3(
-            transform.localPosition.x + (Time.deltaTime * xThrow * xSpeed),
-            transform.localPosition.y + (Time.deltaTime * yThrow * ySpeed),
+            Mathf.Clamp(transform.localPosition.x + (Time.deltaTime * xThrow * xSpeed),-xRange,xRange),
+            Mathf.Clamp(transform.localPosition.y + (Time.deltaTime * yThrow * ySpeed),-yRange, yRange),            
             transform.localPosition.z
             );
 
