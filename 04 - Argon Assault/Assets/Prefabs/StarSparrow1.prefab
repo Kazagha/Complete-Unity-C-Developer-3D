@@ -95,6 +95,61 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2789310a78e50b14c882a3287ff5e69d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  movement:
+    m_Name: Movement
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 4c7249f1-0649-42d9-b67c-6ba9d02846cb
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 2D Vector
+      m_Id: 66237645-3076-4d98-bb02-4f94b78dcc1d
+      m_Path: 2DVector
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Movement
+      m_Flags: 4
+    - m_Name: up
+      m_Id: 292224d4-c2f6-49af-9bbf-eb47f603464e
+      m_Path: <Keyboard>/upArrow
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Movement
+      m_Flags: 8
+    - m_Name: down
+      m_Id: 9abd40ad-a767-446d-87ab-ff6170fd2ace
+      m_Path: <Keyboard>/downArrow
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Movement
+      m_Flags: 8
+    - m_Name: left
+      m_Id: 39cea35c-3591-4cac-ac9c-96d708ae7ecd
+      m_Path: <Keyboard>/leftArrow
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Movement
+      m_Flags: 8
+    - m_Name: right
+      m_Id: 0e77fd6a-47f6-4c14-9a2a-4b5ab20fb8cf
+      m_Path: <Keyboard>/rightArrow
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Movement
+      m_Flags: 8
+    m_Flags: 0
+  xSpeed: 20
+  ySpeed: 20
+  positionPitchFactor: -2
+  controlPitchFactor: -60
+  positionYawFactor: 1.2
+  controlRollFactor: -8
 --- !u!114 &3267218439696453306
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -107,3 +162,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2789310a78e50b14c882a3287ff5e69d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  movement:
+    m_Name: Movement
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: b47aaceb-52f3-4031-8267-cb8bf11639be
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  xSpeed: 50
+  ySpeed: 50
+  positionPitchFactor: -2
+  controlPitchFactor: -40
+  positionYawFactor: -2
+  controlRollFactor: -2
