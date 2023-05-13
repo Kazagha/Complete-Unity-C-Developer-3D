@@ -354,5 +354,13 @@ PrefabInstance:
       propertyPath: m_Name
       value: Tile
       objectReference: {fileID: 0}
+    - target: {fileID: 2543146188552681072, guid: 781fef788cc99e84c9809cb5a65f30c0, type: 3}
+      propertyPath: m_fontSize
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 2543146188552681072, guid: 781fef788cc99e84c9809cb5a65f30c0, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 25
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 781fef788cc99e84c9809cb5a65f30c0, type: 3}
