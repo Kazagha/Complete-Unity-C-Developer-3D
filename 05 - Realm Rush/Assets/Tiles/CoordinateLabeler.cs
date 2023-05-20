@@ -12,18 +12,14 @@ public class CoordinateLabeler : MonoBehaviour
 
     TextMeshPro label;
     Vector2Int coordinates = new Vector2Int();
-    [SerializeField] Waypoint waypoint = null;
+    Waypoint waypoint = null;
 
     private void Awake()
     {
         label = GetComponent<TextMeshPro>();
         waypoint = GetComponentInParent<Waypoint>();
+        label.enabled = false;
         DisplayCoordinates();
-    }
-
-    private void Start()
-    {
-        waypoint = GetComponentInParent<Waypoint>();
     }
 
     // Update is called once per frame
@@ -37,8 +33,17 @@ public class CoordinateLabeler : MonoBehaviour
 
         if(waypoint != null)
         {
-            //Debug.Log(label.color.ToString());
             ColorCoordinates();
+        }
+
+        ToggleLabels();
+    }
+
+    void ToggleLabels()
+    {
+        if(Input.GetKeyDown(KeyCode.C))
+        {
+            label.enabled = !label.IsActive();            
         }
     }
 
