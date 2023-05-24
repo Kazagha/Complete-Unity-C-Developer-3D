@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Waypoint : MonoBehaviour
 {
-    [SerializeField] GameObject towerPrefab;
+    [SerializeField] Tower towerPrefab;
 
     [SerializeField] bool isPlacable;    
     // Property used to access the isPlacable variable 
@@ -15,9 +15,9 @@ public class Waypoint : MonoBehaviour
         // Check if this is a valid loaction to place a tower 
         if (isPlacable)
         {
-            //Debug.Log(string.Format("Location: {0}", transform.name));
-            Instantiate(towerPrefab, transform.position, Quaternion.identity);
-            isPlacable = false;
+            bool isPlaced = towerPrefab.CreateTower(towerPrefab, transform.position);
+            //Instantiate(towerPrefab, transform.position, Quaternion.identity);
+            isPlacable = !isPlaced;
         }
     }    
 }

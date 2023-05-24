@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Bank : MonoBehaviour
 {
@@ -25,9 +26,20 @@ public class Bank : MonoBehaviour
         int abs_amount = Mathf.Abs(amount);
 
         // Confirm the amount is available 
-        if (abs_amount <= currentBalance)
+        //if (abs_amount <= currentBalance)
+        //{
+        currentBalance -= Mathf.Abs(amount);
+        //}
+
+        if(currentBalance < 0)
         {
-            currentBalance -= Mathf.Abs(amount);
+            ReloadScene();
         }
+    }
+
+    void ReloadScene()
+    {
+        Scene currentScene = SceneManager.GetActiveScene();
+        SceneManager.LoadScene(currentScene.buildIndex);
     }
 }
