@@ -8,16 +8,25 @@ public class Bank : MonoBehaviour
     [SerializeField] int startingBalance = 150;
     [SerializeField] int currentBalance;
 
+    GoldLabeler goldLabeler;
+
     public int CurrentBalance { get { return currentBalance; } }
 
-    public void Deposit(int amount)
-    {        
-        currentBalance += Mathf.Abs(amount);
+    public void Start()
+    {
+        goldLabeler = FindObjectOfType<GoldLabeler>();
+        UpdateUI();
     }
 
     private void Awake()
     {
         currentBalance = startingBalance;
+    }
+
+    public void Deposit(int amount)
+    {
+        currentBalance += Mathf.Abs(amount);
+        UpdateUI();
     }
 
     public void Withdraw(int amount)
@@ -35,11 +44,18 @@ public class Bank : MonoBehaviour
         {
             ReloadScene();
         }
+
+        UpdateUI();
     }
 
     void ReloadScene()
     {
         Scene currentScene = SceneManager.GetActiveScene();
         SceneManager.LoadScene(currentScene.buildIndex);
+    }
+
+    void UpdateUI()
+    {
+        goldLabeler.DisplayGold(currentBalance);
     }
 }
