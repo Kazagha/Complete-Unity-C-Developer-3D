@@ -15,6 +15,7 @@ public class Bank : MonoBehaviour
     public void Start()
     {
         goldLabeler = FindObjectOfType<GoldLabeler>();
+        if(goldLabeler == null) { Debug.Log("Can't find the label!"); }
         UpdateUI();
     }
 

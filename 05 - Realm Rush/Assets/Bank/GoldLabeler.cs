@@ -5,11 +5,12 @@ using TMPro;
 
 public class GoldLabeler : MonoBehaviour
 {        
-    TextMeshPro label;
+    TextMeshProUGUI label;
 
     private void Awake()
     {
-        label = GetComponent<TextMeshPro>();
+        //label = GetComponent<TextMeshPro>();
+        label = GetComponent<TextMeshProUGUI>();
     }
 
     public void DisplayGold(int gold)
