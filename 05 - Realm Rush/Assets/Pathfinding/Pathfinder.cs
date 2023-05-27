@@ -5,10 +5,19 @@ using UnityEngine;
 
 public class Pathfinder : MonoBehaviour
 {
-    [SerializeField] Node currentSeachNode;
+    [SerializeField] Vector2Int startCoordinates;
+    [SerializeField] Vector2Int destinationCoordinates;
+
+    Node startNode;
+    Node destinationNode;
+    Node currentSeachNode;
+
+    Queue<Node> frontier = new Queue<Node>();
+    Dictionary<Vector2Int, Node> reached = new Dictionary<Vector2Int, Node>();
+
     Vector2Int[] directions = { Vector2Int.right, Vector2Int.left, Vector2Int.up, Vector2Int.down };
     GridManager gridManager;
-    Dictionary<Vector2Int, Node> grid;
+    Dictionary<Vector2Int, Node> grid = new Dictionary<Vector2Int, Node>();
     
     private void Awake()
     {
@@ -18,19 +27,23 @@ public class Pathfinder : MonoBehaviour
         {
             grid = gridManager.Grid;
         }
+
+        startNode = new Node(startCoordinates,true);
+        destinationNode = new Node(destinationCoordinates, true);
+        
     }
 
     void Start()
     {
-        exploreNeighbors();
+        BreadthFirstSearch();
     }
 
     private void exploreNeighbors()
     {
-        foreach(Vector2Int direction in directions)
-        {
-            List<Node> neighbors = new List<Node>();
+        List<Node> neighbors = new List<Node>();
 
+        foreach (Vector2Int direction in directions)
+        {            
             Vector2Int connected_coord = currentSeachNode.coordinates + direction;
 
             // Check if the node exists
@@ -44,11 +57,37 @@ public class Pathfinder : MonoBehaviour
             if(grid.ContainsKey(connected_coord))
             {
                 neighbors.Add(grid[connected_coord]);
-
-                //TODO: remove after testing 
-                grid[connected_coord].isExplored = true;
-                grid[currentSeachNode.coordinates].isPath = true;
             }
-        }        
+        }    
+        
+        foreach (Node neighbour in neighbors)
+        {
+            if(!reached.ContainsKey(neighbour.coordinates) && neighbour.isWalkable)
+            {
+                reached.Add(neighbour.coordinates, neighbour);
+                frontier.Enqueue(neighbour);
+            }
+        }
+    }
+
+    void BreadthFirstSearch()
+    {
+        bool isRunning = true;
+
+        // Add the starting coordinates to the frontier list 
+        frontier.Enqueue(startNode);
+        // Add the starting coordinates to the 'reached' coordinates list 
+        reached.Add(startCoordinates, startNode);
+
+        while(frontier.Count > 0 && isRunning)
+        {
+            currentSeachNode = frontier.Dequeue();
+            currentSeachNode.isExplored = true;
+            exploreNeighbors();
+            if(currentSeachNode.coordinates == destinationCoordinates)
+            {
+                isRunning = false;
+            }
+        }
     }
 }
