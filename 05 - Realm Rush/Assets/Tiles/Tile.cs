@@ -10,11 +10,13 @@ public class Tile : MonoBehaviour
     public bool IsPlacable { get { return isPlacable; } }
 
     GridManager gridManager;
+    Pathfinder pathfinder;
     Vector2Int coordinates = new Vector2Int();
 
     private void Awake()
     {
         gridManager = FindObjectOfType<GridManager>();
+        pathfinder = FindObjectOfType<Pathfinder>();
     }
 
     private void Start()
@@ -33,11 +35,15 @@ public class Tile : MonoBehaviour
     void OnMouseDown()
     {
         // Check if this is a valid loaction to place a tower 
-        if (isPlacable)
+        if (gridManager.GetNode(coordinates).isWalkable && !pathfinder.WillBlockPath(coordinates))
         {
             bool isPlaced = towerPrefab.CreateTower(towerPrefab, transform.position);
             //Instantiate(towerPrefab, transform.position, Quaternion.identity);
-            isPlacable = !isPlaced;
+            if(isPlaced)
+            {
+                isPlacable = !isPlaced;
+                gridManager.BlockNode(coordinates);
+            }
         }
     }    
 }

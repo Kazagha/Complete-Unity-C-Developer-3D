@@ -38,6 +38,8 @@ public class CoordinateLabeler : MonoBehaviour
         SetLabelColour();     
 
         ToggleLabels();
+
+        //UpdateObjectName();
     }
 
     void ToggleLabels()
