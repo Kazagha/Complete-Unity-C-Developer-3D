@@ -35,7 +35,6 @@ public class CoordinateLabeler : MonoBehaviour
             DisplayCoordinates();
         }
 
-        label.enabled = true;
         SetLabelColour();     
 
         ToggleLabels();
@@ -76,9 +75,11 @@ public class CoordinateLabeler : MonoBehaviour
 
     private void DisplayCoordinates()
     {
-        coordinates.x = Mathf.RoundToInt(transform.parent.position.x / UnityEditor.EditorSnapSettings.move.x);
-        coordinates.y = Mathf.RoundToInt(transform.parent.position.z / UnityEditor.EditorSnapSettings.move.z);
-
+        if(gridManager == null) { return; }
+        
+        coordinates.x = Mathf.RoundToInt(transform.parent.position.x / gridManager.UnityGridSize);
+        coordinates.y = Mathf.RoundToInt(transform.parent.position.z / gridManager.UnityGridSize);
+        
         label.text = String.Format("{0},{1}", coordinates.x, coordinates.y);
     }
 
