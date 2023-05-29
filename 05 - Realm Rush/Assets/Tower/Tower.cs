@@ -6,8 +6,14 @@ using UnityEngine;
 public class Tower : MonoBehaviour
 {
     [SerializeField] int cost = 75;
+    [SerializeField] float buildDelay = 1f;
 
     Bank bank;
+
+    private void Start()
+    {
+        StartCoroutine(Build());            
+    }
 
     public bool CreateTower(Tower tower, Vector3 position)
     {
@@ -23,5 +29,35 @@ public class Tower : MonoBehaviour
         }
 
         return false;
+    }
+       
+    IEnumerator Build()
+    {
+        disableChildObjects();
+
+        foreach(Transform child in transform)
+        {
+            child.gameObject.SetActive(true);
+            yield return new WaitForSeconds(buildDelay);
+
+            // Check the nested GameObjects 
+            foreach(Transform grandChild in child)
+            {
+                grandChild.gameObject.SetActive(true);
+            }
+        }
+    }
+
+    private void disableChildObjects()
+    {
+        foreach (Transform child in transform)
+        {
+            child.gameObject.SetActive(false);
+
+            foreach (Transform grandChild in child)
+            {
+                grandChild.gameObject.SetActive(false);
+            }
+        }
     }
 }
