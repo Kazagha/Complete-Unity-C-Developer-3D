@@ -37,12 +37,12 @@ public class Tile : MonoBehaviour
         // Check if this is a valid loaction to place a tower 
         if (gridManager.GetNode(coordinates).isWalkable && !pathfinder.WillBlockPath(coordinates))
         {
-            bool isPlaced = towerPrefab.CreateTower(towerPrefab, transform.position);
+            bool isSuccessful = towerPrefab.CreateTower(towerPrefab, transform.position);
             //Instantiate(towerPrefab, transform.position, Quaternion.identity);
-            if(isPlaced)
+            if(isSuccessful)
             {
-                isPlacable = !isPlaced;
                 gridManager.BlockNode(coordinates);
+                pathfinder.NotifyReceivers();
             }
         }
     }    
