@@ -5,9 +5,11 @@ using UnityEngine;
 [RequireComponent(typeof(Enemy))]
 public class EnemyMover : MonoBehaviour
 {
-    [SerializeField] List<Tile> path = new List<Tile>();
     [SerializeField] [Range(0f,5f)] float speed = 1f;
 
+    GridManager gridManager;
+    Pathfinder pathfinder;
+    List<Node> path = new List<Node>();
     Enemy enemy;
 
     private void OnEnable()
@@ -17,8 +19,10 @@ public class EnemyMover : MonoBehaviour
         StartCoroutine(FollowPath());
     }
 
-    private void Start()
+    private void Awake()
     {
+        pathfinder = FindObjectOfType<Pathfinder>();
+        gridManager = FindObjectOfType<GridManager>();
         enemy = GetComponent<Enemy>();
     }
 
@@ -26,25 +30,12 @@ public class EnemyMover : MonoBehaviour
     {
         path.Clear();
 
-        // Locate the 'parent' object in the hierarchy
-        GameObject parent = GameObject.FindGameObjectWithTag("Path");
-
-        // Iterate through each child transform underneath the parent 
-        foreach(Transform child in parent.transform)
-        {
-            Tile waypoint = child.GetComponent<Tile>();
-
-            // Check the waypoint is on the child object 
-            if (waypoint != null)
-            {
-                path.Add(waypoint);
-            }
-        }
+        path = pathfinder.GetNewPath();
     }
 
     void ReturnToStart()
     {
-        transform.position = path[0].transform.position;
+        transform.position = gridManager.GetPositionfromCoordinates(pathfinder.StartCoordinates);
     }
 
     void FinishPath()
@@ -55,10 +46,10 @@ public class EnemyMover : MonoBehaviour
 
     IEnumerator FollowPath()
     {
-        foreach(Tile waypoint in path)
+        for(int i = 0; i < path.Count; i++)
         {
             Vector3 startPosition = transform.position;
-            Vector3 endPosition = waypoint.transform.position;
+            Vector3 endPosition = gridManager.GetPositionfromCoordinates(path[i].coordinates);
             float travelPercent = 0f;
 
             transform.LookAt(endPosition);
