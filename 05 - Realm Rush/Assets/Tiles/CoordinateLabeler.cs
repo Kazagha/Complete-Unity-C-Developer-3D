@@ -39,7 +39,7 @@ public class CoordinateLabeler : MonoBehaviour
 
         ToggleLabels();
 
-        //UpdateObjectName();
+        UpdateObjectName();
     }
 
     void ToggleLabels()
